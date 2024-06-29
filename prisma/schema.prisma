@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+model USERS {
+  user_id      Int        @id @default(autoincrement())
+  first_name   String
+  last_name    String
+  email        String
+  phone_number String?
+  user_photo   String?
+  created_at   DateTime   @default(now())
+}
+
+model PASSWORDS {
+  password_id   Int    @id @default(autoincrement())
+  password_hash String
+  user_id       Int
+}
+
+model FRIENDSHIPS {
+  friendship_id Int @id @default(autoincrement())
+  user_id1      Int
+  user_id2      Int
+}
+
+model BOOKS {
+  book_id      Int     @id @default(autoincrement())
+  book_name    String
+  book_photo   Bytes?
+  section      String?
+  category     String?
+  shelf_number Int?
+  row_number   Int?
+}
+
+model NOTES {
+  note_id      Int    @id @default(autoincrement())
+  book_id      Int
+  publisher_id Int
+  content      String
+  sharing      String
+}
