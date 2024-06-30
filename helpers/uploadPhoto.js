@@ -1,5 +1,5 @@
 const { ref, uploadBytes, getDownloadURL } = require("firebase/storage");
-const { storage } = require("./fireabse"); // Firebase projesine ait storage nesnesini doğru şekilde alıyoruz
+const { storage } = require("./firebase"); // Firebase projesine ait storage nesnesini doğru şekilde alıyoruz
 const fs = require("fs");
 const path = require("path");
 

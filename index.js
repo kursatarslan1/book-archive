@@ -23,6 +23,10 @@ app.use(baseURL + "/books", bookRoutes);
 app.use(baseURL + "/notes", noteRoutes);
 app.use(baseURL + "/friendship", friendshipRoutes);
 
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
+if (!module.parent) {
+  app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
+  });
+}
+
+module.exports = app;

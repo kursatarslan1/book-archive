@@ -2,13 +2,13 @@ const { initializeApp } = require("firebase/app");
 const { getStorage } = require("firebase/storage");
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBd-qP5OjdPgPUNj4nstCgmbWIEXtTJYns",
-    authDomain: "stock-tracking-7d068.firebaseapp.com",
-    projectId: "stock-tracking-7d068",
-    storageBucket: "stock-tracking-7d068.appspot.com",
-    messagingSenderId: "171629594613",
-    appId: "1:171629594613:web:4f92a1352d2515807e42bc"
-  };
+  apiKey: "AIzaSyC6-lkjHbyoAf1zBRWfzwEItrIX4zy6gEI",
+  authDomain: "book-archive-b5fcd.firebaseapp.com",
+  projectId: "book-archive-b5fcd",
+  storageBucket: "book-archive-b5fcd.appspot.com",
+  messagingSenderId: "241340650014",
+  appId: "1:241340650014:web:c164892a6efb2312e0d40f"
+};
 
 const app = initializeApp(firebaseConfig);
 const storage = getStorage(app);

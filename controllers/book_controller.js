@@ -159,7 +159,7 @@ async function UpdateBook(req, res) {
     }
 
     const { book } = req.body; 
-
+    
     if(user_id != book.publisher_id){
         await Log.createLog(`Unauthorized token to update book, user_id: ${user_id}, book_id: ${book.book_id}`, "Book", "book_controller.js", "Y");
         return res.status(401).json({ message: "Unauthorized token." });

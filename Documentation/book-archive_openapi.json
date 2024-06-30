@@ -1,0 +1,564 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "book-archive",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    }
+  ],
+  "tags": [
+    {
+      "name": "user"
+    },
+    {
+      "name": "book"
+    },
+    {
+      "name": "note"
+    },
+    {
+      "name": "friendship"
+    }
+  ],
+  "paths": {
+    "/bookarchive/users/register": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "register",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "email": "krs.arslan3@gmail.com",
+                  "first_name": "kürşat",
+                  "last_name": "arslan",
+                  "password": "kursat.123",
+                  "phone_number": "5527322360"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/bookarchive/users/login": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "login",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "email": "krs.arslan3@gmail.com",
+                  "password": "kursat.123"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/bookarchive/users/user": {
+      "put": {
+        "tags": [
+          "user"
+        ],
+        "summary": "update user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "user": {
+                    "user_id": 2,
+                    "first_name": "kürşat",
+                    "last_name": "arslan",
+                    "email": "krs.arslan2@gmail.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJfaWQiOjIsImZpcnN0X25hbWUiOiJrw7xyxZ9hdCIsImxhc3RfbmFtZSI6ImFyc2xhbiIsImVtYWlsIjoia3JzLmFyc2xhbjJAZ21haWwuY29tIiwicGhvbmVfbnVtYmVyIjoiNTUyNzMyMjM2MCIsInVzZXJfcGhvdG8iOiJodHRwczovL2ZpcmViYXNlc3RvcmFnZS5nb29nbGVhcGlzLmNvbS92MC9iL2V2Y2lsLWRvc3R1bS1jbG91ZC5hcHBzcG90LmNvbS9vLzE3MTM5MDU2MTMyOTJfZjdocGwxLnBuZz9hbHQ9bWVkaWEmdG9rZW49MGJhYmRhMjktY2Y5Mi00OTUwLTg2MTQtZWM0ZmI0Y2MzZjFhIiwiY3JlYXRlZF9hdCI6IjIwMjQtMDYtMjlUMjA6NTA6NDYuNTQ2WiJ9LCJpYXQiOjE3MTk3MDQ1ODR9.SHkNZk3mruzT0h-NYP9VKV5K872vTFzHYT_8t59FVDU"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/bookarchive/books/create": {
+      "post": {
+        "tags": [
+          "book"
+        ],
+        "summary": "create book",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "book": {
+                    "book_name": "Lord of the rings",
+                    "book_photo": "",
+                    "section": "A",
+                    "category": "science-fiction",
+                    "shelf_number": 1,
+                    "row_number": 1,
+                    "author": "J. R. R. Tolkien",
+                    "page_count": 1077
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJfaWQiOjEsImZpcnN0X25hbWUiOiJrw7xyxZ9hdCIsImxhc3RfbmFtZSI6ImFyc2xhbiIsImVtYWlsIjoia3JzLmFyc2xhbkBnbWFpbC5jb20iLCJwaG9uZV9udW1iZXIiOiI1NTI3MzIyMzYwIiwidXNlcl9waG90byI6Imh0dHBzOi8vZmlyZWJhc2VzdG9yYWdlLmdvb2dsZWFwaXMuY29tL3YwL2IvZXZjaWwtZG9zdHVtLWNsb3VkLmFwcHNwb3QuY29tL28vMTcxMzkwNTYxMzI5Ml9mN2hwbDEucG5nP2FsdD1tZWRpYSZ0b2tlbj0wYmFiZGEyOS1jZjkyLTQ5NTAtODYxNC1lYzRmYjRjYzNmMWEiLCJjcmVhdGVkX2F0IjoiMjAyNC0wNi0yOVQxODoyMTowNi41MTZaIn0sImlhdCI6MTcxOTY4NTI2OX0.7EZwHbk9uIHdMdUGN2AAPkOKUX8FtAssmtt2Iuhw4Rw"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/bookarchive/books/book/2": {
+      "get": {
+        "tags": [
+          "book"
+        ],
+        "summary": "get book by id",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJfaWQiOjMsImZpcnN0X25hbWUiOiJrw7xyxZ9hdCIsImxhc3RfbmFtZSI6ImFyc2xhbiIsImVtYWlsIjoia3JzLmFyc2xhbjNAZ21haWwuY29tIiwicGhvbmVfbnVtYmVyIjoiNTUyNzMyMjM2MCIsInVzZXJfcGhvdG8iOiJodHRwczovL2ZpcmViYXNlc3RvcmFnZS5nb29nbGVhcGlzLmNvbS92MC9iL2V2Y2lsLWRvc3R1bS1jbG91ZC5hcHBzcG90LmNvbS9vLzE3MTM5MDU2MTMyOTJfZjdocGwxLnBuZz9hbHQ9bWVkaWEmdG9rZW49MGJhYmRhMjktY2Y5Mi00OTUwLTg2MTQtZWM0ZmI0Y2MzZjFhIiwiY3JlYXRlZF9hdCI6IjIwMjQtMDYtMjlUMjI6NDI6MDEuNDAzWiJ9LCJpYXQiOjE3MTk3MDE0MTh9.OZMLWmi2DY5m2Uq27UyVJ9C3bwJLgcAki0bB9VS6r5Q"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "book"
+        ],
+        "summary": "delete book",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJfaWQiOjEsImZpcnN0X25hbWUiOiJrw7xyxZ9hdCIsImxhc3RfbmFtZSI6ImFyc2xhbiIsImVtYWlsIjoia3JzLmFyc2xhbkBnbWFpbC5jb20iLCJwaG9uZV9udW1iZXIiOiI1NTI3MzIyMzYwIiwidXNlcl9waG90byI6Imh0dHBzOi8vZmlyZWJhc2VzdG9yYWdlLmdvb2dsZWFwaXMuY29tL3YwL2IvZXZjaWwtZG9zdHVtLWNsb3VkLmFwcHNwb3QuY29tL28vMTcxMzkwNTYxMzI5Ml9mN2hwbDEucG5nP2FsdD1tZWRpYSZ0b2tlbj0wYmFiZGEyOS1jZjkyLTQ5NTAtODYxNC1lYzRmYjRjYzNmMWEiLCJjcmVhdGVkX2F0IjoiMjAyNC0wNi0yOVQxODoyMTowNi41MTZaIn0sImlhdCI6MTcxOTcwMjQyMH0.bwZUabDenosGo9clsm1bXeOFZm-6gQ1IqoiWW66CI_c"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/bookarchive/books/books/science-fiction": {
+      "get": {
+        "tags": [
+          "book"
+        ],
+        "summary": "get books by category",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/bookarchive/books/book": {
+      "put": {
+        "tags": [
+          "book"
+        ],
+        "summary": "update book",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "book": {
+                    "book_id": 1,
+                    "book_name": "Thief of Lightning",
+                    "book_photo": "",
+                    "section": "B",
+                    "category": "science-fiction",
+                    "shelf_number": 2,
+                    "row_number": 2
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJfaWQiOjEsImZpcnN0X25hbWUiOiJrw7xyxZ9hdCIsImxhc3RfbmFtZSI6ImFyc2xhbiIsImVtYWlsIjoia3JzLmFyc2xhbkBnbWFpbC5jb20iLCJwaG9uZV9udW1iZXIiOiI1NTI3MzIyMzYwIiwidXNlcl9waG90byI6Imh0dHBzOi8vZmlyZWJhc2VzdG9yYWdlLmdvb2dsZWFwaXMuY29tL3YwL2IvZXZjaWwtZG9zdHVtLWNsb3VkLmFwcHNwb3QuY29tL28vMTcxMzkwNTYxMzI5Ml9mN2hwbDEucG5nP2FsdD1tZWRpYSZ0b2tlbj0wYmFiZGEyOS1jZjkyLTQ5NTAtODYxNC1lYzRmYjRjYzNmMWEiLCJjcmVhdGVkX2F0IjoiMjAyNC0wNi0yOVQxODoyMTowNi41MTZaIn0sImlhdCI6MTcxOTY4OTM1Mn0.4XjTxSUw2I7HXFiLgj6CpAF3GADC0R7R7lCS931uFN8"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/bookarchive/notes/create": {
+      "post": {
+        "tags": [
+          "note"
+        ],
+        "summary": "create note",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "note": {
+                    "book_id": 2,
+                    "publisher_id": 3,
+                    "content": "hashdfajskhsdkjhfekslhgklesgse",
+                    "sharing": "P"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJfaWQiOjMsImZpcnN0X25hbWUiOiJrw7xyxZ9hdCIsImxhc3RfbmFtZSI6ImFyc2xhbiIsImVtYWlsIjoia3JzLmFyc2xhbjNAZ21haWwuY29tIiwicGhvbmVfbnVtYmVyIjoiNTUyNzMyMjM2MCIsInVzZXJfcGhvdG8iOiJodHRwczovL2ZpcmViYXNlc3RvcmFnZS5nb29nbGVhcGlzLmNvbS92MC9iL2V2Y2lsLWRvc3R1bS1jbG91ZC5hcHBzcG90LmNvbS9vLzE3MTM5MDU2MTMyOTJfZjdocGwxLnBuZz9hbHQ9bWVkaWEmdG9rZW49MGJhYmRhMjktY2Y5Mi00OTUwLTg2MTQtZWM0ZmI0Y2MzZjFhIiwiY3JlYXRlZF9hdCI6IjIwMjQtMDYtMjlUMjI6NDI6MDEuNDAzWiJ9LCJpYXQiOjE3MTk3MDEzNjl9.C2tO3l9_NELEcvW44h0umc-XD66RV5Z19jRRUKMpIsY"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/bookarchive/notes/note/1": {
+      "get": {
+        "tags": [
+          "note"
+        ],
+        "summary": "get note by note id",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/bookarchive/notes/note": {
+      "put": {
+        "tags": [
+          "note"
+        ],
+        "summary": "update note",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "note": {
+                    "note_id": 1,
+                    "content": "test denemesi 2",
+                    "sharing": "S"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJfaWQiOjIsImZpcnN0X25hbWUiOiJrw7xyxZ9hdCIsImxhc3RfbmFtZSI6ImFyc2xhbiIsImVtYWlsIjoia3JzLmFyc2xhbjJAZ21haWwuY29tIiwicGhvbmVfbnVtYmVyIjoiNTUyNzMyMjM2MCIsInVzZXJfcGhvdG8iOiJodHRwczovL2ZpcmViYXNlc3RvcmFnZS5nb29nbGVhcGlzLmNvbS92MC9iL2V2Y2lsLWRvc3R1bS1jbG91ZC5hcHBzcG90LmNvbS9vLzE3MTM5MDU2MTMyOTJfZjdocGwxLnBuZz9hbHQ9bWVkaWEmdG9rZW49MGJhYmRhMjktY2Y5Mi00OTUwLTg2MTQtZWM0ZmI0Y2MzZjFhIiwiY3JlYXRlZF9hdCI6IjIwMjQtMDYtMjlUMjA6NTA6NDYuNTQ2WiJ9LCJpYXQiOjE3MTk2OTUzMDR9.HZx_GxmLvfw9lacH2XnBdTV4JwJkz5_RWo-5HXpSXaI"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/bookarchive/notes/note/2/1": {
+      "delete": {
+        "tags": [
+          "note"
+        ],
+        "summary": "delete note",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJfaWQiOjIsImZpcnN0X25hbWUiOiJrw7xyxZ9hdCIsImxhc3RfbmFtZSI6ImFyc2xhbiIsImVtYWlsIjoia3JzLmFyc2xhbjJAZ21haWwuY29tIiwicGhvbmVfbnVtYmVyIjoiNTUyNzMyMjM2MCIsInVzZXJfcGhvdG8iOiJodHRwczovL2ZpcmViYXNlc3RvcmFnZS5nb29nbGVhcGlzLmNvbS92MC9iL2V2Y2lsLWRvc3R1bS1jbG91ZC5hcHBzcG90LmNvbS9vLzE3MTM5MDU2MTMyOTJfZjdocGwxLnBuZz9hbHQ9bWVkaWEmdG9rZW49MGJhYmRhMjktY2Y5Mi00OTUwLTg2MTQtZWM0ZmI0Y2MzZjFhIiwiY3JlYXRlZF9hdCI6IjIwMjQtMDYtMjlUMjA6NTA6NDYuNTQ2WiJ9LCJpYXQiOjE3MTk2OTUzMDR9.HZx_GxmLvfw9lacH2XnBdTV4JwJkz5_RWo-5HXpSXaI"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/bookarchive/friendship/friendship": {
+      "post": {
+        "tags": [
+          "friendship"
+        ],
+        "summary": "send friend request",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "user_id1": 1,
+                  "user_id2": 2
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJfaWQiOjEsImZpcnN0X25hbWUiOiJrw7xyxZ9hdCIsImxhc3RfbmFtZSI6ImFyc2xhbiIsImVtYWlsIjoia3JzLmFyc2xhbkBnbWFpbC5jb20iLCJwaG9uZV9udW1iZXIiOiI1NTI3MzIyMzYwIiwidXNlcl9waG90byI6Imh0dHBzOi8vZmlyZWJhc2VzdG9yYWdlLmdvb2dsZWFwaXMuY29tL3YwL2IvZXZjaWwtZG9zdHVtLWNsb3VkLmFwcHNwb3QuY29tL28vMTcxMzkwNTYxMzI5Ml9mN2hwbDEucG5nP2FsdD1tZWRpYSZ0b2tlbj0wYmFiZGEyOS1jZjkyLTQ5NTAtODYxNC1lYzRmYjRjYzNmMWEiLCJjcmVhdGVkX2F0IjoiMjAyNC0wNi0yOVQxODoyMTowNi41MTZaIn0sImlhdCI6MTcxOTY5OTAwNn0.lswcftfZsuPs7Kc39MZzwAw-SYv9Kzp5wfZrg8cNXgY"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/bookarchive/friendship/friendships/2": {
+      "get": {
+        "tags": [
+          "friendship"
+        ],
+        "summary": "get friend requests",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJfaWQiOjIsImZpcnN0X25hbWUiOiJrw7xyxZ9hdCIsImxhc3RfbmFtZSI6ImFyc2xhbiIsImVtYWlsIjoia3JzLmFyc2xhbjJAZ21haWwuY29tIiwicGhvbmVfbnVtYmVyIjoiNTUyNzMyMjM2MCIsInVzZXJfcGhvdG8iOiJodHRwczovL2ZpcmViYXNlc3RvcmFnZS5nb29nbGVhcGlzLmNvbS92MC9iL2V2Y2lsLWRvc3R1bS1jbG91ZC5hcHBzcG90LmNvbS9vLzE3MTM5MDU2MTMyOTJfZjdocGwxLnBuZz9hbHQ9bWVkaWEmdG9rZW49MGJhYmRhMjktY2Y5Mi00OTUwLTg2MTQtZWM0ZmI0Y2MzZjFhIiwiY3JlYXRlZF9hdCI6IjIwMjQtMDYtMjlUMjA6NTA6NDYuNTQ2WiJ9LCJpYXQiOjE3MTk2OTkwNzV9.ppZEYxXi14wbHoXlRnCpAG_s2ELT3kxMmvm690S-kNg"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/bookarchive/friendship/friendship/2/2": {
+      "put": {
+        "tags": [
+          "friendship"
+        ],
+        "summary": "approve request",
+        "requestBody": {
+          "content": {}
+        },
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJfaWQiOjIsImZpcnN0X25hbWUiOiJrw7xyxZ9hdCIsImxhc3RfbmFtZSI6ImFyc2xhbiIsImVtYWlsIjoia3JzLmFyc2xhbjJAZ21haWwuY29tIiwicGhvbmVfbnVtYmVyIjoiNTUyNzMyMjM2MCIsInVzZXJfcGhvdG8iOiJodHRwczovL2ZpcmViYXNlc3RvcmFnZS5nb29nbGVhcGlzLmNvbS92MC9iL2V2Y2lsLWRvc3R1bS1jbG91ZC5hcHBzcG90LmNvbS9vLzE3MTM5MDU2MTMyOTJfZjdocGwxLnBuZz9hbHQ9bWVkaWEmdG9rZW49MGJhYmRhMjktY2Y5Mi00OTUwLTg2MTQtZWM0ZmI0Y2MzZjFhIiwiY3JlYXRlZF9hdCI6IjIwMjQtMDYtMjlUMjA6NTA6NDYuNTQ2WiJ9LCJpYXQiOjE3MTk2OTkwNzV9.ppZEYxXi14wbHoXlRnCpAG_s2ELT3kxMmvm690S-kNg"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/bookarchive/friendship/friendship/1/1": {
+      "delete": {
+        "tags": [
+          "friendship"
+        ],
+        "summary": "delete friend/ reject request",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJfaWQiOjEsImZpcnN0X25hbWUiOiJrw7xyxZ9hdCIsImxhc3RfbmFtZSI6ImFyc2xhbiIsImVtYWlsIjoia3JzLmFyc2xhbkBnbWFpbC5jb20iLCJwaG9uZV9udW1iZXIiOiI1NTI3MzIyMzYwIiwidXNlcl9waG90byI6Imh0dHBzOi8vZmlyZWJhc2VzdG9yYWdlLmdvb2dsZWFwaXMuY29tL3YwL2IvZXZjaWwtZG9zdHVtLWNsb3VkLmFwcHNwb3QuY29tL28vMTcxMzkwNTYxMzI5Ml9mN2hwbDEucG5nP2FsdD1tZWRpYSZ0b2tlbj0wYmFiZGEyOS1jZjkyLTQ5NTAtODYxNC1lYzRmYjRjYzNmMWEiLCJjcmVhdGVkX2F0IjoiMjAyNC0wNi0yOVQxODoyMTowNi41MTZaIn0sImlhdCI6MTcxOTY5ODEzMX0.NEXMwwId_YZb4Oh33Jh8mXMs6piD8YU8caMNundHxZU"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/bookarchive/friendship/friendships/1": {
+      "get": {
+        "tags": [
+          "friendship"
+        ],
+        "summary": "get friendship user ids",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJfaWQiOjEsImZpcnN0X25hbWUiOiJrw7xyxZ9hdCIsImxhc3RfbmFtZSI6ImFyc2xhbiIsImVtYWlsIjoia3JzLmFyc2xhbkBnbWFpbC5jb20iLCJwaG9uZV9udW1iZXIiOiI1NTI3MzIyMzYwIiwidXNlcl9waG90byI6Imh0dHBzOi8vZmlyZWJhc2VzdG9yYWdlLmdvb2dsZWFwaXMuY29tL3YwL2IvZXZjaWwtZG9zdHVtLWNsb3VkLmFwcHNwb3QuY29tL28vMTcxMzkwNTYxMzI5Ml9mN2hwbDEucG5nP2FsdD1tZWRpYSZ0b2tlbj0wYmFiZGEyOS1jZjkyLTQ5NTAtODYxNC1lYzRmYjRjYzNmMWEiLCJjcmVhdGVkX2F0IjoiMjAyNC0wNi0yOVQxODoyMTowNi41MTZaIn0sImlhdCI6MTcxOTY5OTg0OX0.Zzo-3FC9A3TKbLsJXecKHa6O2LF7L2vialWJVFldPw0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    }
+  }
+}
