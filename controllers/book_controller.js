@@ -2,6 +2,7 @@ const { Book } = require("../models/book_model");
 const jwt = require('jsonwebtoken');
 const checkTokenValidity = require("../helpers/check_token_validity");
 const char_limit = 100;
+const { Log } = require('../models/log_model');
 
 async function CreateBook(req, res) {
     const token = req.headers.authorization && req.headers.authorization.split(" ")[1];
@@ -49,10 +50,11 @@ async function CreateBook(req, res) {
             return res.status(400).json({ message: 'Book create failed... ' });
         }
 
+        await Log.createLog(`Book created successfully, book_id: ${bookResult.book_id}`, "Book", "book_controller.js", "N");
         return res.json({ message: "Book created successfully. ", bookResult });
     } catch (error) {
         console.log("Error creating book: ", error);
-        throw error;
+        await Log.createLog(`Error creating book, error: ${error.message}`, "Book", "book_controller.js", "Y");
     }
 }
 
@@ -79,19 +81,22 @@ async function GetBook(req, res) {
     }
 
     if (isNaN(book_id)) {
+        await Log.createLog(`Invalid book ID: ${req.params.book_id}`, "Book", "book_controller.js", "Y");
         return res.status(400).json({ message: "Invalid book ID" });
     }
 
     try {
         const bookResult = await Book.GetBookById(user_id, book_id);
         if (!bookResult) {
+            await Log.createLog(`An error occured getting book, book_id: ${book_id}`, "Book", "book_controller.js", "Y");
             return res.status(400).json({ message: "An error occured getting book" });
         }
 
+        await Log.createLog(`Book fetched successfully, book_id: ${book_id}`, "Book", "book_controller.js", "N");
         return res.json({ bookResult });
     } catch (error) {
         console.log("An error occured getting book: ", error);
-        throw error;
+        await Log.createLog(`An error occured getting book, error: ${error.message}`, "Book", "book_controller.js", "Y");
     }
 }
 
@@ -120,11 +125,14 @@ async function GetBooks(req, res) {
     try {
         const booksResult = await Book.GetBookByCategory(user_id, category);
         if (!booksResult) {
+            await Log.createLog(`An error occured getting books in category: ${category}`, "Book", "book_controller.js", "Y");
             return res.status(400).json({ message: "An error occured getting books" });
         }
+        await Log.createLog(`Books fetched successfully in category: ${category}`, "Book", "book_controller.js", "N");
         return res.json({ booksResult });
     } catch (error) {
         console.log("An error occured getting books: ", error);
+        await Log.createLog(`An error occured getting books, error: ${error.message}`, "Book", "book_controller.js", "Y");
         throw error;
     }
 }
@@ -152,6 +160,7 @@ async function UpdateBook(req, res) {
     const { book } = req.body; 
 
     if(user_id != book.publisher_id){
+        await Log.createLog(`Unauthorized token to update book, user_id: ${user_id}, book_id: ${book.book_id}`, "Book", "book_controller.js", "Y");
         return res.status(401).json({ message: "Unauthorized token." });
     }
 
@@ -159,13 +168,15 @@ async function UpdateBook(req, res) {
         const bookResult = await Book.UpdateBookById(book);
 
         if (!bookResult) {
+            await Log.createLog(`An error occured updating book, book_id: ${book.book_id}`, "Book", "book_controller.js", "Y");
             return res.status(400).json({ message: "An error occured updating book" });
         }
 
+        await Log.createLog(`Book updated successfully, book_id: ${book.book_id}`, "Book", "book_controller.js", "N");
         return res.json({ bookResult });
     } catch (error) {
         console.log("An error occured updating book: ", error);
-        throw error;
+        await Log.createLog(`An error occured updating book, book_id: ${book.book_id}, error: ${error.message}`, "Book", "book_controller.js", "Y");
     }
 }
 
@@ -198,6 +209,7 @@ async function DeleteBook(req, res){
     const getBook = await Book.GetBookById(user_id, book_id);
     
     if(user_id != getBook.publisher_id){
+        await Log.createLog(`Unauthorized token to delete book, user_id: ${user_id}, book_id: ${book_id}`, "Book", "book_controller.js", "Y");
         return res.status(401).json({ message: "Unauthorized token" });
     }
     
@@ -205,13 +217,15 @@ async function DeleteBook(req, res){
         const bookDeleteResult = await Book.DeleteBookById(book_id);
 
         if(!bookDeleteResult){
+            await Log.createLog(`An error occured deleting book, book_id: ${book_id}`, "Book", "book_controller.js", "Y");
             return res.status(400).json({ message: "An error occured deleting book" });
         }
 
+        await Log.createLog(`Book deleted successfully, book_id: ${book_id}`, "Book", "book_controller.js", "N");
         return res.json({ message: "Book deleted successfully. "});
     } catch (error){
         console.log("An error occured deleting books: ", error);
-        throw error;
+        await Log.createLog(`An error occured deleting books, error: ${error.message}`, "Book", "book_controller.js", "Y");
     }
 }
 

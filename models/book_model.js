@@ -1,6 +1,7 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 const { Friendship } = require("./friendship_model");
+const { Log } = require("./log_model");
 
 class Book {
   static async Create(book) {
@@ -18,9 +19,11 @@ class Book {
           publisher_id: book.publisher_id
         }
       });
+      await Log.createLog(`Book created successfully, book_id: ${newBook.book_id}`, "Book", "book_model.js", "N");
       return newBook;
     } catch (error) {
       console.log("Error creating book: ", error);
+      await Log.createLog(`Error creating book, error: ${error.message}`, "Book", "book_model.js", "Y");
       return false;
     }
   }
@@ -58,9 +61,11 @@ class Book {
         },
       });
 
+      await Log.createLog(`Book retrieved successfully, book_id: ${book_id}`, "Book", "book_model.js", "N");
       return book;
     } catch (error) {
       console.log("Error getting book: ", error);
+      await Log.createLog(`Error getting book, book_id: ${book_id}, error: ${error.message}`, "Book", "book_model.js", "Y");
       throw error;
     }
   }
@@ -89,9 +94,11 @@ class Book {
           },
         },
       });
+      await Log.createLog(`Books retrieved by category: ${category}`, "Book", "book_model.js", "N");
       return book;
     } catch (error) {
       console.log('Error getting books by category: ', error);
+      await Log.createLog(`Error getting books by category: ${category}, error: ${error.message}`, "Book", "book_model.js", "Y");
       return false;
     }
   }
@@ -111,9 +118,11 @@ class Book {
           row_number: book.row_number,
         },
       });
+      await Log.createLog(`Book updated successfully, book_id: ${book.book_id}`, "Book", "book_model.js", "N");
       return updatedBook;
     } catch (error) {
       console.log("Error updating book: ", error);
+      await Log.createLog(`Error updating book, book_id: ${book.book_id}, error: ${error.message}`, "Book", "book_model.js", "Y");
       return false;
     }
   }
@@ -131,9 +140,11 @@ class Book {
           book_id: book_id,
         },
       });
+      await Log.createLog(`Book deleted successfully, book_id: ${book_id}`, "Book", "book_model.js", "N");
       return deleteBook;
     } catch (error) {
       console.error("Error deleting book: ", error);
+      await Log.createLog(`Error deleting book, book_id: ${book_id}, error: ${error.message}`, "Book", "book_model.js", "Y");
       return false;
     }
   }

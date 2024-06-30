@@ -52,3 +52,12 @@ model NOTES {
   sharing      String
   BOOKS        BOOKS  @relation("BookNotes", fields: [book_id], references: [book_id])
 }
+
+model LOG {
+  log_id       Int    @id @default(autoincrement())
+  log_message  String
+  log_screen   String
+  log_file     String
+  has_error    String
+  log_date     DateTime   @default(now())
+}

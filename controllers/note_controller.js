@@ -1,6 +1,7 @@
 const { Note } = require("../models/note_model");
 const jwt = require('jsonwebtoken');
 const checkTokenValidity = require("../helpers/check_token_validity");
+const { Log } = require('../models/log_model');
 
 async function CreateNote(req, res) {
     try {
@@ -34,13 +35,15 @@ async function CreateNote(req, res) {
         const noteResult = await Note.Create(note);
 
         if (!noteResult) {
+            await Log.createLog(`An error occured creating note for user_id: ${user_id}`, "Note", "note_controller.js", "Y");
             return res.status(400).json({ message: "An error occured creating note. " });
         }
 
+        await Log.createLog(`Note created successfully for user_id: ${user_id}`, "Note", "note_controller.js", "N");
         return res.json({ message: "Note created successfully", noteResult });
     } catch (error) {
         console.log("Error creating note: ", error);
-        throw error;
+        await Log.createLog(`An error occured creating note, error: ${error.message}`, "Note", "note_controller.js", "Y");
     }
 }
 
@@ -50,12 +53,14 @@ async function GetNotes(req, res) {
     try {
         const notesResult = await Note.GetNotesByBookId(book_id);
         if (!notesResult) {
+            await Log.createLog(`An error occured getting notes for book_id: ${book_id}`, "Note", "note_controller.js", "Y");
             return res.status(400).json({ message: "An error occured getting note" });
         }
+        await Log.createLog(`Notes fetched successfully for book_id: ${book_id}`, "Note", "note_controller.js", "N");
         return res.json({ notesResult });
     } catch (error) {
         console.log("An error occured getting notes: ", error);
-        throw error;
+        await Log.createLog(`An error occured getting notes, error: ${error.message}`, "Note", "note_controller.js", "Y");
     }
 }
 
@@ -89,13 +94,15 @@ async function UpdateNote(req, res) {
         const noteResult = await Note.UpdateNoteByNoteId(note);
 
         if (!noteResult) {
+            await Log.createLog(`An error occured updating note by note_id: ${note.note_id}`, "Note", "note_controller.js", "Y");
             return res.status(400).json({ message: "An error occured updating book" });
         }
 
+        await Log.createLog(`Note updated successfully by note_id: ${note.note_id}`, "Note", "note_controller.js", "N");
         return res.json({ noteResult });
     } catch (error) {
         console.log("An error occured updating note by note id: ", error);
-        throw error;
+        await Log.createLog(`An error occured updating note by note_id, error: ${error.message}`, "Note", "note_controller.js", "Y");
     }
 }
 
@@ -134,13 +141,15 @@ async function DeleteNote(req, res) {
         const noteDeleteResult = await Note.DeleteNoteByNoteId(note_id);
 
         if (!noteDeleteResult) {
+            await Log.createLog(`An error occured deleting note by note_id: ${note_id}`, "Note", "note_controller.js", "Y");
             return res.status(400).json({ message: "An error occured deleting note" });
         }
 
+        await Log.createLog(`Note deleted successfully by note_id: ${note_id}`, "Note", "note_controller.js", "N");
         return res.json({ message: "Note deleted successfully." });
     } catch (error) {
         console.log("An error occured deleting books: ", error);
-        throw error;
+        await Log.createLog(`An error occured deleting note by note_id, error: ${error.message}`, "Note", "note_controller.js", "Y");
     }
 }
 

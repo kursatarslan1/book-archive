@@ -1,5 +1,6 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
+const { Log } = require("./log_model");
 
 class User {
   static async create(first_name, last_name, email, phone_number, user_photo) {
@@ -13,9 +14,11 @@ class User {
           user_photo: user_photo,
         },
       });
+      await Log.createLog(`User created successfully, user_id: ${newUser.user_id}`, "User", "user_model.js", "N");
       return newUser;
     } catch (error) {
       console.log("Error creating user: ", error);
+      await Log.createLog(`Error creating user: ${error.message}`, "User", "user_model.js", "Y");
       return false;
     }
   }
@@ -27,9 +30,11 @@ class User {
           email: email,
         },
       });
+      await Log.createLog(`User found by email, email: ${email}`, "User", "user_model.js", "N");
       return user;
     } catch (error) {
       console.log("Error executing findByEmail query: ", error);
+      await Log.createLog(`Error executing findByEmail query: ${error.message}`, "User", "user_model.js", "Y");
       throw error;
     }
   }
@@ -47,9 +52,12 @@ class User {
           user_photo: user.user_photo,
         },
       });
+      await Log.createLog(`User updated successfully, user_id: ${user.user_id}, old data: ${JSON.stringify(oldUser)}, new data: ${JSON.stringify(user)}`, "User", "user_model.js", "N");
       return updateUser;
     } catch (error){
       console.log("An error occured updating user: ", error);
+      await Log.createLog(`An error occurred updating user: ${error.message}`, "User", "user_model.js", "Y");
+
       return false;
     }
   }
@@ -82,9 +90,11 @@ class User {
           user_id: userId,
         },
       });
+      await Log.createLog(`User deleted successfully, user_id: ${userId}, old data: ${JSON.stringify(oldUser)}`, "User", "user_model.js", "N");
       return deletedUser;
     } catch (error) {
       console.error("Error deleting user: ", error);
+      await Log.createLog(`Error deleting user: ${error.message}`, "User", "user_model.js", "Y");
       throw error;
     }
   }
