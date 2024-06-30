@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const checkTokenValidity = require("../helpers/check_token_validity");
 const char_limit = 100;
 const { Log } = require('../models/log_model');
+const { uploadPhoto } = require("../helpers/uploadPhoto");
 
 async function CreateBook(req, res) {
     const token = req.headers.authorization && req.headers.authorization.split(" ")[1];
