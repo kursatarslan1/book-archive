@@ -27,16 +27,21 @@ model FRIENDSHIPS {
   friendship_id Int @id @default(autoincrement())
   user_id1      Int
   user_id2      Int
+  is_active     String
 }
 
 model BOOKS {
   book_id      Int     @id @default(autoincrement())
   book_name    String
-  book_photo   Bytes?
+  book_photo   String?
   section      String?
   category     String?
   shelf_number Int?
   row_number   Int?
+  author       String?
+  page_count   Int?
+  publisher_id Int?
+  notes        NOTES[] @relation("BookNotes")
 }
 
 model NOTES {
@@ -45,4 +50,5 @@ model NOTES {
   publisher_id Int
   content      String
   sharing      String
+  BOOKS        BOOKS  @relation("BookNotes", fields: [book_id], references: [book_id])
 }
